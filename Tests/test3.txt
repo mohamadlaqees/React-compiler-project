@@ -1,0 +1,14 @@
+Component("link"){
+JSX{
+div(class= flex justify-between){
+link(href="../imageSelec/imageSelec.html" , target="_blank"){
+"Go to the imageSelec page"
+}
+
+link(href="../singleImage/singleImage.html" , target="_blank"){
+"Go to the SingleImage page"
+}
+
+}
+}
+}

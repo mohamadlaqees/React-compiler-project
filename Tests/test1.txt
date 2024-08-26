@@ -1,0 +1,70 @@
+Component("imageSelec") {
+    Data [
+        {
+            id: 1,
+            name: "mouse",
+            picture: "..\\assets\\mousejpg.jpg",
+            details: "Wireless mouse with ergonomic design and long battery life",
+        },
+    ]
+
+    useState(testNow, setTestNow, 100)
+
+
+    Component("ProductDetails", {detail, setDetail}) {
+        JSX {
+            if (detail) {
+            div(class= m-auto){
+                Component("ProductsContent", product=detail enableClass=true setDetail=setDetail)
+            }
+            } else {
+                div() {
+                    "No product shown"
+                }
+            }
+        }
+    }
+
+    Component("Products", {Data, setDetail}) {
+        JSX {
+            div(class=p-10 flex flex-col gap-5 border-b-1 cursor-pointer) {
+                for product in Data {
+                    JSX {
+                        Component("ProductsContent", product=product enableClass=undefined setDetail=setDetail)
+                    }
+                }
+            }
+        }
+    }
+
+    Component("ProductsContent", {product, enableClass, setDetail}) {
+        productClick() {
+            setDetail(product)
+        }
+
+
+        JSX {
+            div(class=enableClass ? m-auto : "", onClick(productClick(product))) {
+                p(class=text-lg font-bold text-gray) {
+                    product.name
+                }
+
+                img(class=w-200 h-200 rounded-full, src=product.picture)
+
+                if (enableClass) {
+                    div() {
+                        product.details
+                    }
+                }
+            }
+        }
+    }
+
+    JSX {
+        div(class=flex justify-between p-10) {
+            Component("ProductDetails", detail=testNow setDetail=setTestNow)
+            Component("Products", Data=Data setDetail=setTestNow)
+        }
+    }
+}
+

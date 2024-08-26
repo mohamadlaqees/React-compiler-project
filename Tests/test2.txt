@@ -1,0 +1,13 @@
+Component ("singleImage"){
+array[
+{
+            id: 1,
+            name: "mouse",
+            picture: "..\\assets\\mousejpg.jpg",
+            details: "Wireless mouse with ergonomic design and long battery life",
+},
+]
+JSX{
+img(class=p-30 flex justify-center , src=array[0].picture)
+}
+}

@@ -1,0 +1,79 @@
+Component("imageSelec") {
+    Data [
+        {
+            id: 1,
+            name: "mouse",
+            picture: "assets\\mousejpg.jpg",
+            details: "Wireless mouse with ergonomic design and long battery life",
+        },
+        {
+            id: 2,
+            name: "laptop",
+            picture: "assets\\laptop.jpg",
+            details: "15.6 inch laptop with Intel i7 processor, 16GB RAM, and 512GB SSD",
+        },
+        {
+            id: 3,
+            name: "tv",
+            picture: "assets\\TV.jpg",
+            details: "55 inch 4K Ultra HD Smart TV with HDR and Alexa Compatibility",
+        },
+    ]
+
+    useState(details, setDetails, {})
+
+
+    Component("ProductDetails", {detail, setDetail}) {
+        JSX {
+            if (detail) {
+                Component("ProductsContent", product=detail enableClass=true setDetail=setDetail)
+            } else {
+                div() {
+                    "No product shown"
+                }
+            }
+        }
+    }
+
+    Component("Products", {Data, setDetail}) {
+        JSX {
+            div(class=p-10 flex flex-col gap-5 border-b-1 cursor-pointer) {
+                for product in Data {
+                    JSX {
+                        Component("ProductsContent", product=product enableClass=undefined setDetail=setDetail)
+                    }
+                }
+            }
+        }
+    }
+
+    Component("ProductsContent", {product, enableClass, setDetail}) {
+        productClick() {
+            setDetail(product)
+        }
+
+
+        JSX {
+            div(class=enableClass ? m-auto : "", onClick(productClick(product))) {
+                p(class=text-lg font-bold text-gray) {
+                    product.name
+                }
+
+                img(class=w-200 h-200 rounded-full, src=product.picture)
+
+                if (enableClass) {
+                    div() {
+                        product.details
+                    }
+                }
+            }
+        }
+    }
+
+    JSX {
+        div(class=flex justify-between p-10) {
+            Component("ProductDetails", detail=details setDetail=setDetails)
+            Component("Products", Data=Data setDetail=setDetails)
+        }
+    }
+}
